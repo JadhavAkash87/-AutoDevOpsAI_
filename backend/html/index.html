@@ -1,0 +1,1621 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoDevOps AI | Student Career Dashboard</title>
+
+<style>
+:root {
+  --navy: #101c36;
+  --blue: #1769ff;
+  --purple: #7357ef;
+  --text: #152747;
+  --muted: #7183a4;
+  --border: #e4eaf5;
+  --bg: #f5f8fd;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input {
+  font: inherit;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  background: linear-gradient(180deg, #101d38, #0c172c);
+  color: white;
+  padding: 25px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  padding: 0 5px;
+  margin-bottom: 35px;
+}
+
+.brand-logo {
+  font-size: 33px;
+  color: #4dcaff;
+}
+
+.brand h2 {
+  font-size: 18px;
+  letter-spacing: -.5px;
+}
+
+.brand p {
+  color: #9eafd0;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.nav-label {
+  color: #7183a4;
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  margin: 8px 12px;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 12px;
+  border-radius: 10px;
+  color: #d4def1;
+  font-size: 13px;
+  margin-bottom: 5px;
+  transition: .2s;
+}
+
+.nav a:hover,
+.nav a.active {
+  background: linear-gradient(100deg, #1357c8, #173d80);
+  color: white;
+}
+
+.nav-icon {
+  width: 23px;
+  text-align: center;
+  font-size: 19px;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 35px;
+}
+
+.motivation {
+  border: 1px solid #344c7b;
+  border-radius: 14px;
+  padding: 17px;
+  background: linear-gradient(140deg, #1b396b, #14213e);
+}
+
+.motivation h3 {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.motivation p {
+  color: #c6d5f2;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+
+.motivation .stars {
+  font-size: 30px;
+  margin-top: 13px;
+  color: #6ecbff;
+}
+
+/* MAIN */
+
+.main {
+  min-width: 0;
+}
+
+.topbar {
+  min-height: 75px;
+  padding: 15px 25px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.global-search {
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f5f8fd;
+  border: 1px solid #edf1f8;
+  padding: 12px 15px;
+  border-radius: 10px;
+}
+
+.global-search span {
+  color: #6480ac;
+  font-size: 20px;
+}
+
+.global-search input {
+  border: 0;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  min-width: 0;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon-button {
+  position: relative;
+  background: #f3f6fc;
+  border: 0;
+  border-radius: 50%;
+  width: 39px;
+  height: 39px;
+  font-size: 18px;
+}
+
+.notification-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 9px;
+  height: 9px;
+  background: #ff4d69;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.user-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c8e7ff, #ded7ff);
+  color: #194ca0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.user-mini strong {
+  font-size: 12px;
+}
+
+.user-mini p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.content {
+  padding: 24px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 285px;
+  gap: 19px;
+  align-items: start;
+}
+
+.left-column,
+.right-column {
+  min-width: 0;
+}
+
+/* HERO */
+
+.hero {
+  overflow: hidden;
+  position: relative;
+  border-radius: 15px;
+  padding: 33px 27px;
+  min-height: 305px;
+  color: white;
+  background:
+    radial-gradient(ellipse at 85% 10%, #378bff 0%, transparent 36%),
+    radial-gradient(ellipse at 70% 100%, #5539d8 0%, transparent 40%),
+    linear-gradient(115deg, #102c63, #173e8a 60%, #292b79);
+}
+
+.hero::after {
+  content: "✧";
+  position: absolute;
+  right: 30px;
+  top: 8px;
+  font-size: 155px;
+  line-height: 1;
+  color: #ffffff12;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 610px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  color: #8be0ff;
+  letter-spacing: 1.6px;
+  margin-bottom: 15px;
+}
+
+.hero h1 {
+  font-size: clamp(29px, 3vw, 43px);
+  line-height: 1.15;
+  letter-spacing: -1.1px;
+  margin-bottom: 14px;
+}
+
+.hero h1 span {
+  color: #67d5ff;
+}
+
+.hero-description {
+  color: #e0eaff;
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 275px;
+}
+.hero-search button {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 80px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: #1769ff;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hero-search button {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 75px;
+  padding: 10px 16px;
+  white-space: nowrap;
+}
+.primary-button {
+  background: linear-gradient(100deg, #367aff, #7754f4);
+  color: white;
+  border: 0;
+  padding: 12px 20px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 100;
+  white-space: nowrap;
+}
+
+.popular {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+}
+
+.popular span {
+  color: #e0eaff;
+  margin-right: 3px;
+}
+
+.popular button {
+  border: 1px solid #ffffff2b;
+  border-radius: 20px;
+  padding: 6px 10px;
+  color: white;
+  background: #ffffff13;
+  font-size: 10px;
+}
+
+/* SECTIONS AND CARDS */
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 25px 0 15px;
+}
+
+.section-heading h2 {
+  font-size: 18px;
+}
+
+.section-heading p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.link-button {
+  color: #1769ff;
+  font-size: 12px;
+  background: none;
+  border: none;
+  white-space: nowrap;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.feature-card {
+  padding: 17px 15px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 12px;
+  min-height: 192px;
+  transition: .2s;
+}
+
+.feature-card:hover,
+.panel:hover {
+  border-color: #b8ceff;
+  box-shadow: 0 6px 22px #294d8c0b;
+}
+
+.feature-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.blue { background: #e6efff; }
+.purple { background: #efebff; }
+.green { background: #ddf7ef; }
+.orange { background: #fff0d4; }
+
+.feature-card h3 {
+  font-size: 12px;
+  margin-bottom: 9px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.feature-card a {
+  display: inline-block;
+  color: #175dff;
+  font-size: 11px;
+  margin-top: 14px;
+}
+
+/* LOWER PANELS */
+
+.lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, .9fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 17px;
+  min-width: 0;
+}
+
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #edf1f8;
+}
+
+.panel-heading h3 {
+  font-size: 14px;
+}
+
+.job-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf1f8;
+}
+
+.job-row:last-child {
+  border-bottom: 0;
+}
+
+.company-icon {
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #f7f9ff;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.job-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.job-info h4 {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.job-info p {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.job-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 9px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: #e7f8f0;
+  color: #128362;
+  white-space: nowrap;
+}
+
+.tag.purple-tag {
+  background: #f0e9ff;
+  color: #7844d8;
+}
+
+.tag.blue-tag {
+  background: #e5f2ff;
+  color: #1768c8;
+}
+
+/* PROGRESS */
+
+.progress-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.progress-ring {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: conic-gradient(#2581ff 0deg 252deg, #e7edf8 252deg);
+  display: grid;
+  place-items: center;
+}
+
+.progress-inner {
+  width: 73px;
+  height: 73px;
+  background: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.progress-caption {
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0f3f8;
+}
+
+.check-row input {
+  accent-color: #0bb68a;
+}
+
+.check-row span {
+  flex: 1;
+}
+
+/* RIGHT COLUMN */
+
+.profile-panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+}
+
+.profile-avatar {
+  width: 53px;
+  height: 53px;
+  background: linear-gradient(135deg, #d4eaff, #e8dcff);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #2558a9;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.profile-top h3 {
+  font-size: 14px;
+}
+
+.profile-top p {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+.profile-progress {
+  border-top: 1px solid #edf1f8;
+  padding-top: 14px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 9px;
+}
+
+.progress-label span {
+  color: var(--muted);
+}
+
+.bar {
+  height: 7px;
+  border-radius: 20px;
+  background: #eaf0fa;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  width: 70%;
+  background: linear-gradient(90deg, #1d7cff, #39b4ff);
+  border-radius: inherit;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  text-align: center;
+  padding-top: 18px;
+}
+
+.stats strong {
+  display: block;
+  font-size: 19px;
+}
+
+.stats p {
+  color: var(--muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.quick-panel,
+.latest-panel {
+  margin-top: 15px;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.quick-action .feature-icon {
+  flex-shrink: 0;
+  margin: 0;
+  width: 43px;
+  height: 43px;
+}
+
+.quick-action h4 {
+  font-size: 11px;
+}
+
+.quick-action p {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.quick-arrow {
+  margin-left: auto;
+  color: #1769ff;
+}
+
+.latest-panel .job-row {
+  align-items: flex-start;
+}
+
+.latest-panel .job-info h4 {
+  font-size: 11px;
+}
+
+.latest-panel .job-meta {
+  line-height: 1.6;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: #8290aa;
+  font-size: 11px;
+}
+
+/* TABLET AND MOBILE */
+
+@media (max-width: 1200px) {
+  .app {
+    grid-template-columns: 215px minmax(0, 1fr);
+  }
+
+  .content {
+    padding: 17px;
+  }
+
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .quick-panel,
+  .latest-panel {
+    margin-top: 0;
+  }
+
+  .latest-panel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    padding: 12px;
+  }
+
+  .brand {
+    margin-bottom: 12px;
+  }
+
+  .nav-label,
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .nav {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    margin-top: 8px;
+    padding-bottom: 3px;
+  }
+
+  .nav a {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 10px;
+    font-size: 11px;
+    gap: 5px;
+  }
+
+  .nav-icon {
+    width: auto;
+    font-size: 15px;
+  }
+
+  .topbar {
+    padding: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .global-search {
+    order: 2;
+    max-width: none;
+  }
+
+  .top-actions {
+    gap: 8px;
+  }
+
+  .user-mini strong {
+    font-size: 10px;
+  }
+
+  .user-mini p {
+    font-size: 10px;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .hero {
+    padding: 25px 18px;
+    min-height: auto;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero::after {
+    font-size: 90px;
+    right: 10px;
+  }
+
+  .features {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lower-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .right-column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .latest-panel {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 390px) {
+  .features {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .top-actions .user-mini div:last-child {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+}
+.hero {
+  position: relative;
+}
+
+.hero-robot {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 240px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-robot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(23, 105, 255, 0.45));
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .hero-robot {
+    width: 140px;
+    right: 8px;
+    opacity: 0.35;
+  }
+}
+
+/* ===== AUTO DEVOPS AI - PROFESSIONAL JOB PORTAL ===== */
+
+#jobResultsSection {
+    margin-top: 30px !important;
+    padding: 24px;
+    background: linear-gradient(135deg, #101c36, #172b50);
+    border: 1px solid rgba(80, 140, 255, .25);
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(16, 28, 54, .12);
+}
+
+#jobResultsSection h2 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+#jobResultsMessage {
+    color: #a9c5ef;
+    font-size: 13px;
+    margin: 8px 0 22px;
+}
+
+#jobResults {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+#jobResults article {
+    background: #fff !important;
+    color: #152747 !important;
+    padding: 22px !important;
+    margin: 0 !important;
+    border: 1px solid #dce7fb !important;
+    border-radius: 17px !important;
+    box-shadow: 0 7px 24px rgba(0,0,0,.12);
+    transition: .25s;
+    min-width: 0;
+}
+
+#jobResults article:hover {
+    transform: translateY(-5px);
+    border-color: #1769ff !important;
+    box-shadow: 0 14px 30px rgba(23,105,255,.16);
+}
+
+#jobResults article h3 {
+    color: #1769ff;
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 14px;
+}
+
+#jobResults article p {
+    color: #536783;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#jobResults article h4 {
+    color: #152747;
+    font-size: 14px;
+    margin: 15px 0 8px;
+}
+
+#jobResults article div {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+#jobResults article a {
+    display: inline-block;
+    background: linear-gradient(90deg, #1769ff, #7357ef) !important;
+    color: white !important;
+    padding: 11px 20px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 750;
+    text-decoration: none;
+    margin-top: 12px;
+}
+
+#jobResults article button {
+    cursor: pointer;
+    border-radius: 9px;
+    padding: 10px 14px;
+}
+
+@media(max-width: 900px) {
+    #jobResults {
+        grid-template-columns: 1fr;
+    }
+
+    #jobResultsSection {
+        padding: 15px;
+    }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">✧</div>
+      <div>
+        <h2>AutoDevOps AI</h2>
+        <p>Student Career Platform</p>
+      </div>
+    </div>
+
+    <div class="nav-label">MAIN MENU</div>
+
+    <nav class="nav">
+      <a class="active" href="#home"><span class="nav-icon">⌂</span>Home</a>
+      <a href="jobs.html"><span class="nav-icon">▣</span>Jobs & Internships</a>
+      <a href="#study"><span class="nav-icon">▤</span>AI Study Assistant</a>
+      <a href="#resume"><span class="nav-icon">▧</span>Resume Builder</a>
+      <a href="#applications"><span class="nav-icon">➤</span>My Applications</a>
+      <a href="#notifications"><span class="nav-icon">♧</span>Notifications</a>
+      <a href="#profile"><span class="nav-icon">♙</span>Profile</a>
+      <a href="#security"><span class="nav-icon">⚙</span>Settings</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="motivation">
+        <h3>Small Steps<br>Big Dreams</h3>
+        <p>Your future is created by what you do today.</p>
+        <div class="stars">✦ ✧ ✦</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <label class="global-search">
+        <span>⌕</span>
+        <input id="globalSearch"
+               type="search"
+               placeholder="Search jobs, skills, courses...">
+      </label>
+
+      <div class="top-actions">
+        <button class="icon-button"
+                aria-label="Notifications"
+                onclick="showNotice('Notifications will be connected to the backend.')">
+          ♧<span class="notification-dot"></span>
+        </button>
+
+        <div class="user-mini" id="profile">
+          <div class="avatar">S</div>
+          <div>
+            <strong>Student Account</strong>
+            <p>Career Dashboard</p>
+          </div>
+        </div>
+        
+<div id="studentLogin" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#080d24,#111b45,#32165c);
+  font-family:Arial,sans-serif;
+">
+  <div style="
+    width:100%;
+    max-width:400px;
+    box-sizing:border-box;
+    padding:32px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:24px;
+    background:rgba(255,255,255,.08);
+    color:white;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+  ">
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="
+        width:64px;height:64px;
+        margin:0 auto 16px;
+        display:flex;align-items:center;justify-content:center;
+        border-radius:20px;
+        background:linear-gradient(135deg,#4f8cff,#a855f7);
+        font-size:30px;
+      ">✦</div>
+      <h2 id="loginTitle" style="margin:0 0 10px;font-size:28px;">
+        Student AI
+      </h2>
+      <p style="color:#c4cbea;margin:0;">
+        Welcome back! Login to your account
+      </p>
+    </div>
+
+    <form id="studentLoginForm">
+      <label for="studentEmail">Student Email</label>
+      <input id="studentEmail" type="email"
+        placeholder="you@example.com" required
+        style="display:block;width:100%;box-sizing:border-box;
+        padding:14px;margin:8px 0 20px;border-radius:12px;
+        border:1px solid #455078;background:#111a38;
+        color:white;">
+
+      <label for="studentPassword">Password</label>
+      <input id="studentPassword" type="password"
+        placeholder="Enter your password" required
+        style="display:block;width:100%;box-sizing:border-box;
+        padding:14px;margin:8px 0 22px;border-radius:12px;
+        border:1px solid #455078;background:#111a38;
+        color:white;">
+
+      <button type="submit" style="
+        width:100%;padding:14px;border:0;border-radius:12px;
+        color:white;font-size:16px;font-weight:bold;
+        cursor:pointer;background:linear-gradient(90deg,#4776ff,#a044ff);
+      ">Login</button>
+    </form>
+
+    <button type="button" id="createStudentAccount" style="
+      width:100%;padding:13px;margin-top:14px;
+      border:1px solid #7886bd;border-radius:12px;
+      background:transparent;color:white;
+      font-size:15px;cursor:pointer;
+    "> Create Account</button>
+
+    <button type="button" id="closeStudentLogin" style="
+      display:block;margin:16px auto 0;border:0;
+      background:transparent;color:#c4cbea;cursor:pointer;
+    "> Back to Dashboard</button>
+
+    <p id="loginMessage" style="text-align:center;"></p>
+  </div>
+</div>
+
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="dashboard">
+
+        <div class="left-column">
+
+          <section class="hero" id="home">
+             <div class="hero-robot">
+        <img src="ai-robot.png" alt="AI Robot">
+    </div>
+            <div class="hero-content">
+              <div class="eyebrow">AI POWERED CAREER PLATFORM</div>
+
+              <h1>Your Career, Your Future.<br>
+                Powered by <span>AI.</span>
+              </h1>
+
+              <p class="hero-description">
+                Get personalized career guidance, discover opportunities,
+                build your skills and prepare for your dream job — all in one place.
+              </p>
+
+              <form class="hero-search" id="searchForm">
+    <input id="heroSearch"
+           type="search"
+           placeholder="Search jobs, skills, or courses..."
+           aria-label="Search jobs, skills, or courses">
+
+    <button class="primary-button" type="submit">Search</button>
+</form>
+
+<!-- AutoDevOps AI Live Job Results -->
+<section id="jobResultsSection" style="margin-top: 24px;">
+    <h2>Live Job Search Results</h2>
+    <p id="jobResultsMessage">Search for jobs to see live results.</p>
+    <div id="jobResults"></div>
+</section>
+
+              <div class="popular">
+                <span>Popular searches:</span>
+                <button type="button" data-search="React">React</button>
+                <button type="button" data-search="Python">Python</button>
+                <button type="button" data-search="Data Science">Data Science</button>
+                <button type="button" data-search="Web Developer">Web Developer</button>
+                <button type="button" data-search="Internship">Internship</button>
+              </div>
+
+              <p id="searchMessage" role="status"
+                 style="margin-top:12px;font-size:12px;"></p>
+            </div>
+          </section>
+
+          <div class="section-heading">
+            <div>
+              <h2>Top Features</h2>
+              <p>Everything you need to build your dream career.</p>
+            </div>
+          </div>
+
+          <section class="features">
+            <article class="feature-card" id="jobs">
+              <div class="feature-icon orange">▣</div>
+              <h3>Jobs & Internships</h3>
+              <p>Explore career opportunities that match your interests.</p>
+              <a href="#jobResultsSection">Explore Jobs →</a>
+            </article>
+
+            <article class="feature-card" id="study">
+              <div class="feature-icon purple">✧</div>
+              <h3>AI Study Assistant</h3>
+              <p>Study plans, learning resources and interview practice.</p>
+              <a href="#study">Explore →</a>
+            </article>
+
+            <article class="feature-card" id="resume">
+              <div class="feature-icon green">▤</div>
+              <h3>Resume Builder</h3>
+              <p>Prepare your resume for your next career opportunity.</p>
+              <a href="#resume">Explore →</a>
+            </article>
+
+            <article class="feature-card" id="autoapply">
+              <div class="feature-icon blue">◇</div>
+              <h3>Auto Apply</h3>
+              <p>Prepare job applications with your permission.</p>
+              <a href="#applications">Explore →</a>
+            </article>
+          </section>
+
+          <div class="lower-grid">
+            <section class="panel" id="recommended">
+              <div class="panel-heading">
+                <h3>Recommended Jobs</h3>
+                <button class="link-button" onclick="showNotice('Live job listings will be added with the jobs API.')">View All →</button>
+              </div>
+
+              <div class="job-row">
+                <div class="company-icon">G</div>
+                <div class="job-info">
+                  <h4>Software Engineer Intern</h4>
+                  <p>Example company · Sample listing</p>
+                  <div class="job-meta">
+                    <span>Remote</span>
+                    <span>Internship</span>
+                  </div>
+                </div>
+                <span class="tag">Sample</span>
+              </div>
+
+              <div class="job-row">
+                <div class="company-icon">M</div>
+                <div class="job-info">
+                  <h4>Frontend Developer</h4>
+                  <p>Example company · Sample listing</p>
+                  <div class="job-meta">
+                    <span>Hybrid</span>
+                    <span>Full Time</span>
+                  </div>
+                </div>
+                <span class="tag purple-tag">Sample</span>
+              </div>
+
+              <div class="job-row">
+                <div class="company-icon">D</div>
+                <div class="job-info">
+                  <h4>Junior Data Analyst</h4>
+                  <p>Example company · Sample listing</p>
+                  <div class="job-meta">
+                    <span>India</span>
+                    <span>Entry Level</span>
+                  </div>
+                </div>
+                <span class="tag blue-tag">Sample</span>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-heading">
+                <h3>Your Progress</h3>
+              </div>
+
+              <div class="progress-wrap">
+                <div class="progress-ring">
+                  <div class="progress-inner" id="progressNumber">50%</div>
+                </div>
+              </div>
+              <p class="progress-caption">Demo checklist completion</p>
+
+              <label class="check-row">
+                <input type="checkbox" class="task">
+                <span>Complete your profile</span>
+              </label>
+
+              <label class="check-row">
+                <input type="checkbox" class="task">
+                <span>Add your skills</span>
+              </label>
+
+              <label class="check-row">
+                <input type="checkbox" class="task">
+                <span>Prepare your resume</span>
+              </label>
+
+              <label class="check-row">
+                <input type="checkbox" class="task">
+                <span>Explore job matches</span>
+              </label>
+            </section>
+          </div>
+        </div>
+
+        <aside class="right-column">
+
+          <section class="profile-panel">
+            <div class="profile-top">
+              <div class="profile-avatar">S</div>
+              <div>
+                <h3>Student Profile</h3>
+                <p>Welcome to your dashboard</p>
+              </div>
+            </div>
+
+            <div class="profile-progress">
+              <div class="progress-label">
+                <strong>Profile Completion</strong>
+                <span>70%</span>
+              </div>
+              <div class="bar"><div></div></div>
+            </div>
+
+            <div class="stats">
+              <div><strong>0</strong><p>Applications</p></div>
+              <div><strong>0</strong><p>Saved Jobs</p></div>
+              <div><strong>0</strong><p>Skills Added</p></div>
+            </div>
+          </section>
+
+          <section class="panel quick-panel">
+            <div class="panel-heading">
+              <h3>Quick Actions</h3>
+            </div>
+
+            <a class="quick-action" href="#resume">
+              <div class="feature-icon blue">▤</div>
+              <div><h4>Upload Resume</h4><p>Prepare your job profile</p></div>
+              <span class="quick-arrow">→</span>
+            </a>
+
+            <a class="quick-action" href="#study">
+              <div class="feature-icon purple">✧</div>
+              <div><h4>Practice Skills</h4><p>Build your knowledge</p></div>
+              <span class="quick-arrow">→</span>
+            </a>
+
+            <a class="quick-action" href="#jobs">
+              <div class="feature-icon green">▣</div>
+              <div><h4>Explore Jobs</h4><p>Find career opportunities</p></div>
+              <span class="quick-arrow">→</span>
+            </a>
+          </section>
+
+          <section class="panel latest-panel" id="applications">
+            <div class="panel-heading">
+              <h3>Latest Job Examples</h3>
+              <span class="tag blue-tag">Demo</span>
+            </div>
+
+            <div class="job-row">
+              <div class="company-icon">G</div>
+              <div class="job-info">
+                <h4>Software Developer Intern</h4>
+                <p>Example listing</p>
+                <div class="job-meta"><span>Remote</span><span>Internship</span></div>
+              </div>
+            </div>
+
+            <div class="job-row">
+              <div class="company-icon">T</div>
+              <div class="job-info">
+                <h4>Frontend Developer</h4>
+                <p>Example listing</p>
+                <div class="job-meta"><span>India</span><span>Full Time</span></div>
+              </div>
+            </div>
+
+            <div class="job-row">
+              <div class="company-icon">D</div>
+              <div class="job-info">
+                <h4>Data Analyst</h4>
+                <p>Example listing</p>
+                <div class="job-meta"><span>Entry Level</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="notifications">
+            <div class="panel-heading">
+              <h3>Notifications</h3>
+            </div>
+            <p style="font-size:12px;color:#7183a4;line-height:1.7;margin-top:12px;">
+              Your job alerts and application updates will appear here when the backend is connected.
+            </p>
+          </section>
+
+        </aside>
+      </div>
+
+      <footer id="security">
+        AutoDevOps AI · Student Career Platform · Frontend Demo
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+
+const API_URL = "http://localhost:5000";
+const JOB_API_URL = API_URL + "/api/jobs";
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    async function checkBackend() {
+        try {
+            const response = await fetch(API_URL + "/api/services");
+            const data = await response.json();
+            console.log("Backend Connected:", data);
+        } catch (error) {
+            console.error("Backend Connection Failed:", error);
+        }
+    }
+
+    checkBackend();
+
+    const searchForm = document.getElementById("searchForm");
+
+    if (searchForm) {
+        searchForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const searchInput = document.getElementById("heroSearch");
+            const resultsContainer = document.getElementById("jobResults");
+            const message = document.getElementById("jobResultsMessage");
+            const keyword = searchInput.value.trim();
+
+            if (!keyword) {
+                message.textContent = "Please enter a job title or skill.";
+                return;
+            }
+
+            message.textContent = "Searching live jobs...";
+            resultsContainer.replaceChildren();
+
+            try {
+                const response = await fetch(
+                    JOB_API_URL + "?q=" + encodeURIComponent(keyword)
+                );
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || "Job search failed.");
+                }
+
+                if (!Array.isArray(data.jobs) || data.jobs.length === 0) {
+                    message.textContent = "No jobs found.";
+                    return;
+                }
+
+                message.textContent =
+                    data.jobs.length + ' jobs found for "' + keyword + '".';
+
+                data.jobs.forEach(function(job) {
+                    const card = document.createElement("article");
+
+                    card.style.cssText =
+                        "background:#fff;color:#152747;padding:22px;" +
+                        "margin:16px 0;border-radius:14px;" +
+                        "border:1px solid #e4eaf5;box-shadow:0 4px 15px rgba(0,0,0,.05);";
+
+                    const title = document.createElement("h3");
+                    title.textContent = job.title || "Job Title Not Available";
+
+                    const company = document.createElement("p");
+                    company.textContent = "🏢 Company: " + (job.company || "Not specified");
+
+                    const location = document.createElement("p");
+                    location.textContent = "📍 Location: " + (job.location || "Not specified");
+
+                    const salary = document.createElement("p");
+                    salary.textContent = "💰 Salary: " + (job.salary || "Not specified");
+
+                    const experience = document.createElement("p");
+                    experience.textContent = "🎓 Experience: " + (job.experience || "Not specified");
+
+                    const jobType = document.createElement("p");
+                    jobType.textContent = "💼 Job Type: " + (job.jobType || "Not specified");
+
+                    const descriptionTitle = document.createElement("h4");
+                    descriptionTitle.textContent = "Job Description";
+
+                    const description = document.createElement("div");
+                    description.textContent = job.description
+                        ? job.description.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+                        : "Description not available.";
+
+                    description.style.cssText =
+                        "font-size:14px;line-height:1.6;margin:8px 0 14px;";
+
+                    const source = document.createElement("p");
+                    source.textContent = "Source: " + (job.source || "Himalayas");
+
+                    const saveButton = document.createElement("button");
+                    saveButton.type = "button";
+                    saveButton.textContent = "☆ Save Job";
+                    saveButton.style.cssText =
+                        "padding:10px 14px;border:1px solid #1769ff;" +
+                        "border-radius:8px;background:white;color:#1769ff;" +
+                        "cursor:pointer;margin-right:8px;";
+
+                    saveButton.addEventListener("click", function() {
+                        saveButton.textContent = "✓ Saved";
+                        saveButton.disabled = true;
+                    });
+
+                    const applyButton = document.createElement("a");
+                    applyButton.textContent = "Apply Now →";
+                    applyButton.href = job.applyLink || job.sourceLink || "https://himalayas.app";
+                    applyButton.target = "_blank";
+                    applyButton.rel = "noopener noreferrer";
+
+                    applyButton.style.cssText =
+                        "display:inline-block;background:#1769ff;color:white;" +
+                        "padding:10px 16px;border-radius:8px;" +
+                        "text-decoration:none;margin-top:10px;";
+
+                    card.append(
+                        title,
+                        company,
+                        location,
+                        salary,
+                        experience,
+                        jobType,
+                        descriptionTitle,
+                        description,
+                        source,
+                        saveButton,
+                        applyButton
+                    );
+
+                    resultsContainer.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error("Live Job Search Error:", error);
+                message.textContent = "Unable to load jobs. Please check backend.";
+            }
+        });
+    }
+
+    document.querySelectorAll("[data-search]").forEach(function(button) {
+        button.addEventListener("click", function() {
+            const searchInput = document.getElementById("heroSearch");
+
+            if (searchInput) {
+                searchInput.value = this.dataset.search;
+                searchInput.focus();
+            }
+        });
+    });
+
+    const tasks = document.querySelectorAll(".task");
+
+    tasks.forEach(function(task) {
+        task.addEventListener("change", function() {
+            const completed = document.querySelectorAll(".task:checked").length;
+            const percentage = tasks.length
+                ? Math.round((completed / tasks.length) * 100)
+                : 0;
+
+            const progressNumber = document.getElementById("progressNumber");
+
+            if (progressNumber) {
+                progressNumber.textContent = percentage + "%";
+            }
+        });
+    });
+});
+
+function showNotice(message) {
+    alert(message);
+}
+</script>
+</body>
+</html>

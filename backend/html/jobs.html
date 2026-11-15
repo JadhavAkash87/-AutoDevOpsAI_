@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoDevOps AI | Job Search</title>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    color: #17233d;
+}
+
+header {
+    background: #101c36;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 { color: #64a2ff; }
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+.search-box {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 12px;
+    box-shadow: 0 3px 15px #0000000c;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #dce3ef;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+button, .apply {
+    background: #1769ff;
+    color: white;
+    border: 0;
+    padding: 13px 20px;
+    border-radius: 7px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 240px 1fr 230px;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.panel, .job-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e5eaf3;
+    margin-bottom: 15px;
+}
+
+.panel h3 { margin-bottom: 18px; }
+
+.filter { margin-bottom: 18px; }
+.filter label { display: block; margin-bottom: 8px; font-size: 14px; }
+
+.job-card h3 { color: #1769ff; margin-bottom: 9px; }
+.company { font-weight: bold; margin-bottom: 12px; }
+
+.details {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 2;
+}
+
+.description {
+    margin: 12px 0;
+    font-size: 14px;
+    color: #475569;
+}
+
+.job-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.save {
+    background: white;
+    color: #1769ff;
+    border: 1px solid #1769ff;
+}
+
+#jobResultsMessage { margin-bottom: 15px; color: #64748b; }
+
+@media(max-width: 950px) {
+    .layout { grid-template-columns: 1fr; }
+    .search-box { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>AutoDevOps AI</h2>
+    <a href="index.html">← Back to Dashboard</a>
+</header>
+
+<main class="container">
+
+    <h2>Find Your Dream Job</h2>
+    <p style="color:#64748b;margin:8px 0 20px;">
+        Search thousands of career opportunities with AI.
+    </p>
+
+    <form class="search-box" id="jobSearchForm">
+        <input id="keyword" placeholder="Job title or skills (e.g. AWS DevOps)">
+        <input id="location" placeholder="Location (e.g. Mumbai)">
+        <select id="workMode">
+            <option value="">All Work Modes</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Office">Office</option>
+        </select>
+        <button type="submit">Search Jobs</button>
+    </form>
+
+    <div class="layout">
+
+        <aside class="panel">
+            <h3>Filters</h3>
+
+            <div class="filter">
+                <label>Experience</label>
+                <select id="experience">
+                    <option value="">All Experience</option>
+                    <option value="fresher">Fresher</option>
+                    <option value="junior">0–2 Years</option>
+                    <option value="mid">2–5 Years</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Job Type</label>
+                <select id="jobType">
+                    <option value="">All Job Types</option>
+                    <option value="Full-time">Full Time</option>
+                    <option value="Part-time">Part Time</option>
+                    <option value="Internship">Internship</option>
+                </select>
+            </div>
+
+            <div class="filter">
+                <label>Salary</label>
+                <select id="salary">
+                    <option value="">Any Salary</option>
+                    <option value="300000">3 LPA and above</option>
+                    <option value="500000">5 LPA and above</option>
+                </select>
+            </div>
+        </aside>
+
+        <section>
+            <h3 style="margin-bottom:15px;">Latest Job Openings</h3>
+            <p id="jobResultsMessage">Search to see available jobs.</p>
+            <div id="jobResults"></div>
+        </section>
+
+        <aside>
+            <div class="panel">
+                <h3>AI Job Match</h3>
+                <p style="font-size:14px;color:#64748b;">
+                    Search for jobs matching your skills and experience.
+                </p>
+            </div>
+
+            <div class="panel">
+                <h3>Career Tip</h3>
+                <p style="font-size:14px;color:#64748b;">
+                    Add AWS, Docker, Jenkins, Terraform and Kubernetes to your profile.
+                </p>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<script>
+const API_URL = "http://localhost:5000/api/jobs";
+
+let allJobs = [];
+
+const results = document.getElementById("jobResults");
+const message = document.getElementById("jobResultsMessage");
+
+function cleanText(value) {
+    const div = document.createElement("div");
+    div.innerHTML = value || "";
+    return div.textContent || div.innerText || "";
+}
+
+function renderJobs(jobs) {
+    results.innerHTML = "";
+
+    if (!jobs.length) {
+        message.textContent = "No matching jobs found. Try another search.";
+        return;
+    }
+
+    message.textContent = jobs.length + " jobs found";
+
+    jobs.forEach(job => {
+        const card = document.createElement("article");
+        card.className = "job-card";
+
+        const title = document.createElement("h3");
+        title.textContent = job.title || "Job Opening";
+
+        const company = document.createElement("p");
+        company.className = "company";
+        company.textContent = job.company || "Company not specified";
+
+        const details = document.createElement("p");
+        details.className = "details";
+        details.textContent =
+            "📍 " + (job.location || "Location not specified") +
+            " | Experience: " + (job.experience || "Not specified") +
+            " | Salary: " + (job.salary || "Not disclosed");
+
+        const description = document.createElement("p");
+        description.className = "description";
+        description.textContent = cleanText(job.description).slice(0, 220);
+
+        const actions = document.createElement("div");
+        actions.className = "job-actions";
+
+        const apply = document.createElement("a");
+        apply.className = "apply";
+        apply.textContent = "Apply Now";
+        apply.href = job.applyLink || job.sourceLink || "#";
+        apply.target = "_blank";
+        apply.rel = "noopener noreferrer";
+
+        const save = document.createElement("button");
+        save.className = "save";
+        save.textContent = "Save Job";
+        save.type = "button";
+        save.addEventListener("click", () => {
+            save.textContent = "Saved ✓";
+            save.disabled = true;
+        });
+
+        actions.append(apply, save);
+        card.append(title, company, details, description, actions);
+        results.appendChild(card);
+    });
+}
+
+async function searchJobs() {
+    const keyword = document.getElementById("keyword").value.trim() || "DevOps";
+
+    message.textContent = "Loading jobs...";
+    results.innerHTML = "";
+
+    try {
+        const response = await fetch(API_URL + "?q=" + encodeURIComponent(keyword));
+
+        if (!response.ok) throw new Error("API request failed");
+
+        const data = await response.json();
+        allJobs = data.jobs || [];
+        applyFilters();
+
+    } catch (error) {
+        message.textContent =
+            "Unable to load jobs. Please check whether the backend server is running.";
+    }
+}
+
+function applyFilters() {
+    const location = document.getElementById("location").value.toLowerCase();
+    const type = document.getElementById("jobType").value.toLowerCase();
+    const experience = document.getElementById("experience").value;
+
+    let filtered = allJobs.filter(job => {
+        const jobLocation = (job.location || "").toLowerCase();
+        const jobType = (job.jobType || "").toLowerCase();
+        const jobExperience = (job.experience || "").toLowerCase();
+
+        if (location && !jobLocation.includes(location)) return false;
+        if (type && !jobType.includes(type)) return false;
+
+        if (experience === "fresher" &&
+            !/fresher|entry|0.?year|intern/i.test(jobExperience)) return false;
+
+        if (experience === "junior" &&
+            !/0.?2|1.?2|junior|entry/i.test(jobExperience)) return false;
+
+        if (experience === "mid" &&
+            !/2.?5|3.?5|mid/i.test(jobExperience)) return false;
+
+        return true;
+    });
+
+    renderJobs(filtered);
+}
+
+document.getElementById("jobSearchForm").addEventListener("submit", event => {
+    event.preventDefault();
+    searchJobs();
+});
+
+["location", "experience", "jobType"].forEach(id => {
+    document.getElementById(id).addEventListener("change", applyFilters);
+});
+
+searchJobs();
+</script>
+
+</body>
+</html>
